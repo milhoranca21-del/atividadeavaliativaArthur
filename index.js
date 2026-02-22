@@ -5,9 +5,28 @@ const porta = 3000;
 
 const server =express();
 
-server.listen(porta,host,() => {
-    console.log(`Servidor escutando http://${host}:${porta} `)
+
+
+
+
+server.get('/', (req, res) => {
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="pt-br">
+        <head>
+            <meta charset="UTF-8">
+            <title>Sistema de Reajuste</title>
+        </head>
+        <body>
+            <h1>Sistema de Reajuste Salarial</h1>
+        
+             <p>Exemplo:</p>
+                <p>http://localhost:3000/reajuste?idade=18&sexo=F&salario_base=1700&anoContratacao=2014&matricula=123</p>
+        </body>
+        </html>
+    `);
 });
+
  server.get('/reajuste', (req, res) => {
 
     const idade = parseInt(req.query.idade);
@@ -17,14 +36,13 @@ server.listen(porta,host,() => {
     const matricula = parseInt(req.query.matricula);
 
     // Validações
-    if (
-        idade || idade <= 16 ||
-        (sexo !== 'M' && sexo !== 'F') ||
-        salarioBase ||
-        isNaN(salarioBase) ||
-        anoContratacao || anoContratacao <= 1960 ||
-        matricula || matricula <= 0
-    ) {
+   if (
+    isNaN(idade) || idade <= 16 ||
+    (sexo !== 'M' && sexo !== 'F') ||
+    isNaN(salarioBase) || salarioBase <= 0 ||
+    isNaN(anoContratacao) || anoContratacao <= 1960 ||
+    isNaN(matricula) || matricula <= 0
+) {
         res.send(`
             <!DOCTYPE html>
             <html lang="pt-br">
@@ -120,4 +138,8 @@ server.listen(porta,host,() => {
 
         res.end();
     }
+});
+
+server.listen(porta,host,() => {
+    console.log(`Servidor escutando http://${host}:${porta} `)
 });
