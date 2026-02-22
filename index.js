@@ -128,7 +128,7 @@ server.get('/', (req, res) => {
 
                 <hr>
 
-                <h2 style="color: green;">
+                <h2>
                     Novo Salário: R$ ${novoSalario.toFixed(2)}
                 </h2>
 
